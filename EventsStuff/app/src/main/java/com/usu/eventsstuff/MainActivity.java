@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
         LinearLayout mainLayout = new LinearLayout(this);
         mainLayout.setBackgroundColor(Color.GRAY);
         mainLayout.setOrientation(LinearLayout.VERTICAL);
@@ -74,9 +73,5 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(mainLayout);
-=======
-        System.out.println("Hello, world");
-        setContentView(R.layout.activity_main);
->>>>>>> 37c35b0cc932eed5185206552a037012c8d95dec
     }
 }
