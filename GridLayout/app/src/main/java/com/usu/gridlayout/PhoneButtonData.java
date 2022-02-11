@@ -8,14 +8,14 @@ public class PhoneButtonData {
         Clear
     }
 
-    final public String text;
+    final public int textId;
     final public int row;
     final public int col;
     final public int colSpan;
     final public ButtonType type;
 
-    public PhoneButtonData(String text, int row, int col, int colSpan, ButtonType type) {
-        this.text = text;
+    public PhoneButtonData(int textId, int row, int col, int colSpan, ButtonType type) {
+        this.textId = textId;
         this.row = row;
         this.col = col;
         this.colSpan = colSpan;

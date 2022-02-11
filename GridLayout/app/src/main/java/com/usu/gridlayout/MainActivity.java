@@ -24,18 +24,18 @@ public class MainActivity extends AppCompatActivity {
         GridLayout phoneLayout = new GridLayout(this);
 
         ArrayList<PhoneButtonData> buttonData = new ArrayList<>();
-        buttonData.add(new PhoneButtonData("1", 1, 0, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("2", 1, 1, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("3", 1, 2, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("4", 2, 0, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("5", 2, 1, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("6", 2, 2, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("7", 3, 0, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("8", 3, 1, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("9", 3, 2, 1, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("0", 4,  0, 3, PhoneButtonData.ButtonType.Number));
-        buttonData.add(new PhoneButtonData("Clear", 5, 0, 1, PhoneButtonData.ButtonType.Clear));
-        buttonData.add(new PhoneButtonData("Call", 5, 1, 2 , PhoneButtonData.ButtonType.Call));
+        buttonData.add(new PhoneButtonData(R.string.one, 1, 0, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.two, 1, 1, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.three, 1, 2, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.four, 2, 0, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.five, 2, 1, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.six, 2, 2, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.seven, 3, 0, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.eight, 3, 1, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.nine, 3, 2, 1, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.zero, 4,  0, 3, PhoneButtonData.ButtonType.Number));
+        buttonData.add(new PhoneButtonData(R.string.clear, 5, 0, 1, PhoneButtonData.ButtonType.Clear));
+        buttonData.add(new PhoneButtonData(R.string.call, 5, 1, 2 , PhoneButtonData.ButtonType.Call));
 
         AppCompatTextView numberDisplay = new AppCompatTextView(this);
         GridLayout.LayoutParams numberParams = new GridLayout.LayoutParams();
@@ -49,14 +49,15 @@ public class MainActivity extends AppCompatActivity {
         buttonData.forEach(data -> {
             AppCompatButton button = new AppCompatButton(this);
             button.setTextSize(24);
-            button.setText(data.text);
+            button.setText(data.textId);
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.rowSpec = GridLayout.spec(data.row, 1.0f);
             params.columnSpec = GridLayout.spec(data.col, data.colSpan, 1.0f);
             button.setLayoutParams(params);
             button.setOnClickListener(view -> {
+                button.setBackgroundColor(getResources().getColor(R.color.purple_700, null));
                 if (data.type == PhoneButtonData.ButtonType.Number) {
-                    numberDisplay.setText(numberDisplay.getText() + data.text);
+                    numberDisplay.setText(numberDisplay.getText() + getResources().getString(data.textId));
                 } else if (data.type == PhoneButtonData.ButtonType.Call) {
                     Intent phoneIntent = new Intent(Intent.ACTION_CALL);
                     phoneIntent.setData(Uri.parse("tel:"+numberDisplay.getText()));
