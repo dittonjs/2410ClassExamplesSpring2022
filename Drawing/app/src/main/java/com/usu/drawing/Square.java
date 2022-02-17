@@ -21,8 +21,6 @@ public class Square extends Shape {
 
     public void render(Canvas canvas, Paint paint) {
         paint.setColor(Color.BLUE);
-
-
         canvas.translate(x, y);
         canvas.drawRect(
                 0,
@@ -31,16 +29,15 @@ public class Square extends Shape {
                 height,
                 paint
         );
+    }
 
-        paint.reset();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(100);
-        canvas.drawRect(
-                0,
-                0,
-                width,
-                height,
-                paint
-        );
+    @Override
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    @Override
+    public void setHeight(int height) {
+        this.height = height;
     }
 }
