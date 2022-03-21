@@ -1,5 +1,6 @@
 package com.usu.drawing;
 
+import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -30,9 +31,10 @@ public class DrawingView extends View {
 
         super(context);
 
-        animator = ValueAnimator.ofInt(100, 1000);
+        animator = ValueAnimator.ofInt(100, 254);
         animator.setRepeatMode(ValueAnimator.REVERSE);
         animator.setDuration(1000);
+//        animator.setInterpolator();
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -76,6 +78,7 @@ public class DrawingView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        paint.setColor(Color.rgb(radius % 255, 100, 100));
         canvas.translate(getWidth() / 2, getHeight() / 2);
         canvas.drawCircle(0, 0, radius, paint);
 
