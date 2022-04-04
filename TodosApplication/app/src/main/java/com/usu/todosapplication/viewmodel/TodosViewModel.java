@@ -21,6 +21,8 @@ public class TodosViewModel extends ViewModel {
     }
 
     public ArrayList<Todo> getTodos() {
-        return this.repository.getTodos();
+        new Thread(() -> {
+            return this.repository.getTodos();
+        }).start();
     }
 }

@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,13 +32,30 @@ public class NewTodoFragment extends Fragment {
         viewModel.getErrorMessage().observe(this, (message) -> {
             TextView errorView = view.findViewById(R.id.errorMessage);
             errorView.setText(message);
+        });
 
+        viewModel.getSaving().observe(this, saving -> {
+            Button button = view.findViewById(R.id.saveButton);
+            if (saving) {
+                button.setEnabled(false);
+                button.setText("Saving...");
+
+            } else {
+                button.setEnabled(true);
+                button.setText("Save");
+            }
+        });
+
+        viewModel.getSaveSuccess().observe(this, saveSuccess -> {
+            if (saveSuccess) {
+                NavHostFragment.findNavController(this).popBackStack();
+            }
         });
 
         view.findViewById(R.id.saveButton).setOnClickListener(button -> {
             EditText taskText = view.findViewById(R.id.task);
             viewModel.saveTodo(taskText.getText().toString());
-//            NavHostFragment.findNavController(this).popBackStack();
+
         });
         return view;
     }

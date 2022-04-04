@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +27,16 @@ public class TodosFragment extends Fragment {
 
         // Inflate the layout for this fragment
         TodosViewModel viewModel = new ViewModelProvider(this).get(TodosViewModel.class);
-        System.out.println(viewModel.getTodos());
+
         View view = inflater.inflate(R.layout.fragment_todos_fragment, container, false);
+
         view.findViewById(R.id.plusButton).setOnClickListener(button -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_todos_fragment_to_newTodoFragment);
         });
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(new TodosAdapter(viewModel.getTodos()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
     }
 }
