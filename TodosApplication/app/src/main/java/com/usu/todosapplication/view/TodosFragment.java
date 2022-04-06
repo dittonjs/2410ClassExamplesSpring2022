@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.usu.todosapplication.R;
 import com.usu.todosapplication.viewmodel.TodosViewModel;
@@ -32,6 +33,12 @@ public class TodosFragment extends Fragment {
 
         view.findViewById(R.id.plusButton).setOnClickListener(button -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_todos_fragment_to_newTodoFragment);
+        });
+
+        viewModel.getErrorMessage().observe(this, message -> {
+            if (!message.equals("")) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);

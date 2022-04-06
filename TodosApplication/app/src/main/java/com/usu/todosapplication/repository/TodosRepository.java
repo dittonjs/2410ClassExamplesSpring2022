@@ -1,6 +1,7 @@
 package com.usu.todosapplication.repository;
 
 import android.content.Context;
+import android.os.Handler;
 
 import androidx.databinding.ObservableArrayList;
 import androidx.room.Room;
@@ -23,6 +24,26 @@ public class TodosRepository {
 
     ArrayList<Todo> todos;
 
+    private Handler handler = new Handler();
+
+    public class TodosRespositoryException extends RuntimeException {
+        public TodosRespositoryException(String message) {
+            super(message);
+        }
+    }
+
+    public interface TodosCallback {
+        public void call(ArrayList<Todo> todos);
+    }
+
+    public interface TodoCallback {
+        public void call(Todo todo);
+    }
+
+    public interface ExceptionCallback {
+        public void call(TodosRespositoryException exception);
+    }
+
     @Inject
     public TodosRepository(@ApplicationContext Context context) {
         db = Room.databaseBuilder(context, AppDatabase.class, "todos-database" ).build();
@@ -38,15 +59,33 @@ public class TodosRepository {
         todos.add(newTodo);
     }
 
-    public ArrayList<Todo> getTodos() {
+    public void getTodos(TodosCallback callback) {
         if (todos == null) {
-            todos = (ArrayList<Todo>) db.getTodosDao().getTodos();
-        }
-        return todos;
+            new Thread(() -> {
+                todos = (ArrayList<Todo>) db.getTodosDao().getTodos();
+                handler.post(() -> {
+                   callback.call(todos);
+                });
+            }).start();
+        } else {
+            callback.call(todos);
+        };
     }
 
-    public void updateTodo(Todo todo) {
-        db.getTodosDao().updateTodo(todo);
+    public void updateTodo(Todo todo, TodoCallback callback, ExceptionCallback eCallback) {
+        new Thread(() -> {
+            try {
+                throw new TodosRespositoryException("Could not connect to database");
+//                db.getTodosDao().updateTodo(todo);
+//                handler.post(() -> {
+//                    callback.call(todo);
+//                });
+            } catch (TodosRespositoryException e) {
+                handler.post(() -> {
+                    eCallback.call(e);
+                });
+            }
+        }).start();
     }
 
 }
