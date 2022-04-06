@@ -35,7 +35,9 @@ public class TodosFragment extends Fragment {
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setAdapter(new TodosAdapter(viewModel.getTodos()));
+        recyclerView.setAdapter(new TodosAdapter(viewModel.getTodos(), (todo) -> {
+            viewModel.toggleTodoStatus(todo);
+        }));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
     }

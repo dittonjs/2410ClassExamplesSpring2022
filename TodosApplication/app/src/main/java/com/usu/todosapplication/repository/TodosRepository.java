@@ -2,6 +2,7 @@ package com.usu.todosapplication.repository;
 
 import android.content.Context;
 
+import androidx.databinding.ObservableArrayList;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
@@ -30,11 +31,10 @@ public class TodosRepository {
     public void saveTodo(String task) {
         // save it
         Todo newTodo = new Todo();
-        newTodo.id = todos.size() + 1;
         newTodo.task = task;
         newTodo.isComplete = false;
         // TODO save to database
-        db.getTodosDao().createTodo(newTodo);
+        newTodo.id = db.getTodosDao().createTodo(newTodo);
         todos.add(newTodo);
     }
 
@@ -43,6 +43,10 @@ public class TodosRepository {
             todos = (ArrayList<Todo>) db.getTodosDao().getTodos();
         }
         return todos;
+    }
+
+    public void updateTodo(Todo todo) {
+        db.getTodosDao().updateTodo(todo);
     }
 
 }

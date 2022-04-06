@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 /*
 todo
 =======================================================================
@@ -26,4 +28,10 @@ public class Todo {
 
     @ColumnInfo
     public long createdAt;
+
+    @Override
+    public boolean equals(Object o) {
+        Todo other = (Todo) o;
+        return other.id == this.id;
+    }
 }
