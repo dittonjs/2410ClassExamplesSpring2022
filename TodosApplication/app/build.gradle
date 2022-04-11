@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -35,6 +36,9 @@ android {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
+    implementation 'com.google.firebase:firebase-firestore'
+
     def room_version = "2.4.2"
 
     implementation "androidx.room:room-runtime:$room_version"

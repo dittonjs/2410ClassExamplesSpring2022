@@ -40,14 +40,15 @@ public class NewTodoViewModel extends ViewModel {
         // check to make sure task is not empty
         errorMessage.setValue("");
         saving.setValue(true);
-        new Thread(() -> {
-            if (task.isEmpty()) {
-                errorMessage.postValue("Task cannot be empty");
-            } else {
-                this.repository.saveTodo(task);
-                saveSuccess.postValue(true);
-            }
-            saving.postValue(false);
-        }).start();
+        if (task.isEmpty()) {
+            errorMessage.postValue("Task cannot be empty");
+        } else {
+            this.repository.saveTodo(task, (todo) -> {
+              saveSuccess.setValue(true);
+              saving.setValue(false);
+            }, (error) -> {
+                saving.setValue(false);
+            });
+        }
     }
 }

@@ -15,7 +15,7 @@ id int32          |      task varchar(512)  |         isComplete       |
 2                |   do my homework      |           true              |
  */
 
-@Entity
+//@Entity
 public class Todo {
     @PrimaryKey
     public long id;

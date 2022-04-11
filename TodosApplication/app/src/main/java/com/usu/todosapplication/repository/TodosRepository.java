@@ -7,6 +7,7 @@ import androidx.databinding.ObservableArrayList;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.usu.todosapplication.model.AppDatabase;
 import com.usu.todosapplication.model.Todo;
 
@@ -20,8 +21,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 @Singleton
 public class TodosRepository {
 
-    AppDatabase db;
-
+//    AppDatabase db;
+    FirebaseFirestore db;
     ArrayList<Todo> todos;
 
     private Handler handler = new Handler();
@@ -46,46 +47,45 @@ public class TodosRepository {
 
     @Inject
     public TodosRepository(@ApplicationContext Context context) {
-        db = Room.databaseBuilder(context, AppDatabase.class, "todos-database" ).build();
+//        db = Room.databaseBuilder(context, AppDatabase.class, "todos-database" ).build();
+        db = FirebaseFirestore.getInstance();
     }
 
-    public void saveTodo(String task) {
-        // save it
-        Todo newTodo = new Todo();
-        newTodo.task = task;
-        newTodo.isComplete = false;
-        // TODO save to database
-        newTodo.id = db.getTodosDao().createTodo(newTodo);
-        todos.add(newTodo);
+    public void saveTodo(String task, TodoCallback callback, ExceptionCallback errorCallback) {
+//        // save it
+//        Todo newTodo = new Todo();
+//        newTodo.task = task;
+//        newTodo.isComplete = false;
+//        // TODO save to database
+
     }
 
     public void getTodos(TodosCallback callback) {
-        if (todos == null) {
-            new Thread(() -> {
-                todos = (ArrayList<Todo>) db.getTodosDao().getTodos();
-                handler.post(() -> {
-                   callback.call(todos);
-                });
-            }).start();
-        } else {
-            callback.call(todos);
-        };
+//        if (todos == null) {
+//            new Thread(() -> {
+//                todos = (ArrayList<Todo>) db.getTodosDao().getTodos();
+//                handler.post(() -> {
+//                   callback.call(todos);
+//                });
+//            }).start();
+//        } else {
+//            callback.call(todos);
+//        };
     }
 
     public void updateTodo(Todo todo, TodoCallback callback, ExceptionCallback eCallback) {
-        new Thread(() -> {
-            try {
-                throw new TodosRespositoryException("Could not connect to database");
+//        new Thread(() -> {
+//            try {
 //                db.getTodosDao().updateTodo(todo);
 //                handler.post(() -> {
 //                    callback.call(todo);
 //                });
-            } catch (TodosRespositoryException e) {
-                handler.post(() -> {
-                    eCallback.call(e);
-                });
-            }
-        }).start();
+//            } catch (TodosRespositoryException e) {
+//                handler.post(() -> {
+//                    eCallback.call(e);
+//                });
+//            }
+//        }).start();
     }
 
 }
