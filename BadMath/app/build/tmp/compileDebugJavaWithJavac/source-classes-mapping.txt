@@ -1,0 +1,9 @@
+com/usu/badmath/BuildConfig.java
+ com.usu.badmath.BuildConfig
+com/usu/badmath/MainActivity.java
+ com.usu.badmath.MainActivity
+com/usu/badmath/HomeFragment.java
+ com.usu.badmath.Dog
+ com.usu.badmath.HomeFragment
+com/usu/badmath/BadMathFragment.java
+ com.usu.badmath.BadMathFragment

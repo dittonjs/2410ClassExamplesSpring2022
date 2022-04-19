@@ -56,6 +56,7 @@ public class TodosRepository {
         newTodo.isComplete = false;
         // TODO save to database
         newTodo.id = db.getTodosDao().createTodo(newTodo);
+        System.out.println(newTodo.id);
         todos.add(newTodo);
     }
 
@@ -75,11 +76,11 @@ public class TodosRepository {
     public void updateTodo(Todo todo, TodoCallback callback, ExceptionCallback eCallback) {
         new Thread(() -> {
             try {
-                throw new TodosRespositoryException("Could not connect to database");
-//                db.getTodosDao().updateTodo(todo);
-//                handler.post(() -> {
-//                    callback.call(todo);
-//                });
+//                throw new TodosRespositoryException("Could not connect to database");
+                db.getTodosDao().updateTodo(todo);
+                handler.post(() -> {
+                    callback.call(todo);
+                });
             } catch (TodosRespositoryException e) {
                 handler.post(() -> {
                     eCallback.call(e);
